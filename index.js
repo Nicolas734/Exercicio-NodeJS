@@ -1,54 +1,124 @@
 (async () => {
 
-    const db = require("./db");
+    const insert = require('./controller/inserts')
+    const select = require('./controller/selects')
+    const update = require('./controller/updates')
+    const del = require('./controller/deletes')
+    const prompt = require('prompt-sync')()
+
     console.log('Aplicação rodando')
 
-    console.log('Inserindo Clientes')
-    const insertCli = await db.inserirCliente({ nome:'Nicolas', email:'nichollaslimma734@gmial.com', cpf:3223, telefone:3232323 })
-    console.log('Cliente Inserido com Sucesso')
+    console.log(`Opções:`);
+    console.log(`1 - Cadastrar cliente`);
+    console.log(`2 - Cadastrar produto`);
+    console.log(`3 - Cadastrar pedido`);
+    console.log(`4 - Listar clientes`);
+    console.log(`5 - Listar produtos`);
+    console.log(`6 - Listar pedidos`);
+    console.log(`7 - Atualizar cliente`);
+    console.log(`8 - Atualizar produto`);
+    console.log(`9 - Atualizar pedido`);
+    console.log(`10 - Remover cliente`);
+    console.log(`11 - Remover produto`);
+    console.log(`12 - Remover cliente`);
 
-    console.log('Inserido Produtos');
-    const insertProd = await db.inserirProdutos({ nome_prod:'minoxidil', descricao:'produto para calvos', valor_prod: 28.00 })
-    console.log('Produto Inserido com Sucesso');
+    let option = parseInt(prompt(`Por favor, escolha uma opção: `));
 
-    console.log('Inserido Produtos');
-    const insertPed = await db.inserirPedido({ cli_id:7, prod_id:5})
-    console.log('Produto Inserido com Sucesso');
+        switch(option){
+            case 1:
+                console.log(`Início do cadastro do cliente.\n`);
 
-    console.log('Selecionar Clientes')
-    const listClli = await db.selecionarCli()
-    console.log(listClli)
+                let nomeCli = prompt("Digite o nome do cliente: ");
+                let emailCli = prompt("Digite o email do cliente: ");
+                let cpfCli = parseInt(prompt("Digite o CPF do cliente: "));
+                let telCli = parseInt(prompt("Digite o telefone do cliente: "));
+                const insertCli = await insert.inserirCliente({ nome:nomeCli, email:emailCli, cpf:cpfCli, telefone:telCli });
 
-    console.log('Selecionar Produtos')
-    const listProd = await db.selecionarProd()
-    console.log(listProd);
+                console.log(`Cliente ${nomeCli} Inserido com Sucesso`);
+                break;
 
-    console.log('Selecionar Pedidos');
-    const listPed = await db.selecionarPedidos()
-    console.log(listPed);
+            case 2:
+                console.log(`Início do cadastro do Produto.`);
 
-    console.log('Atualizar Cliente')
-    const updateCli = await db.updateCli( 1, { nome:'Lima', email:'limma734@gmial.com', cpf:55555, telefone:555555 })
-    console.log('Dados do Cliente Atualizados com sucesso');
+                let prodNome = prompt("Digite o nome do produto: ");
+                let prodDesc = prompt("Digite a descrição do produto: ");
+                let prodValor = parseInt(prompt("Digite a descrição do produto: "));
+                const insertProd = await insert.inserirProdutos({ nome_prod:prodNome, descricao:prodDesc, valor_prod:prodValor });
 
-    console.log('Atualizar Pedido')
-    const updateProd = await db.updateProd( 1, {  nome_prod:'menta', descricao:'balinha da boa', valor_prod: 2.00 })
-    console.log('Dados do Pedido Cliente Atualizados com sucesso');
+                console.log('Produto Inserido com Sucesso');
+                break;
 
-    console.log('Atualizar Produtos')
-    const updatePed = await db.updatePed( 2, { prod_id:'3' })
-    console.log('Dados do Produto do Cliente Atualizados com sucesso');
+            case 3:
+                console.log('Inserido Produtos');
+                const insertPed = await insert.inserirPedido({ cli_id:7, prod_id:5});
+                console.log('Produto Inserido com Sucesso');
+                break;
 
-    console.log('Atualizar Pedido')
-    const deleteCli = await db.deleteCli(3)
-    console.log('Cliente Deletado');
+            case 4:
+                const listClli = await select.selecionarCli();
+                console.log(listClli)
+                break;
 
-    console.log('Atualizar Pedido')
-    const deleteProd = await db.deleteProd(3)
-    console.log('Produto Deletado');
+            case 5:
+                const listProd = await select.selecionarProd();
+                console.log(listProd);
+                break;
 
-    console.log('Atualizar Pedido')
-    const deletePed = await db.deletePed(7)
-    console.log('Pedido Deletado');
+            case 6:
+                const listPed = await select.selecionarPedidos();
+                console.log(listPed);
+                break;
+
+            case 7:
+                console.log(`Atualizar dados do cliente.`);
+                let updateCliID = prompt("Digite o Id do cliente: ");
+                let updateCliNome = prompt("Digite o nome do cliente: ");
+                let updateCliEmail = prompt("Digite o email do cliente: ");
+                let updateCliCpf = prompt("Digite o CPF do cliente: ");
+                let updateCliTel = prompt("Digite o ID do cliente: ");
+                const updateCli = await update.updateCli( updateCliID, { nome:updateCliNome, email:updateCliEmail, cpf:updateCliCpf, telefone:updateCliTel })
+                console.log('Dados do Cliente Atualizados com sucesso');
+                break;
+
+            case 8:
+                console.log('Atualizar dados do produto.')
+                let updateProdNome = prompt("Digite o nome do produto: ");
+                let updateProdDesc = prompt("Digite a descrição do produto: ");
+                let updateProdValor = parseInt(prompt("Digite o valor do produto: "));
+                let updateProdID = prompt("Digite o ID do produto: ");
+                const updateProd = await update.updateProd( updateProdID, {  nome_prod:updateProdNome, descricao:updateProdDesc, valor_prod: updateProdValor })
+                console.log('Dados do Produto do Cliente Atualizados com sucesso');
+                break;
+
+            case 9:
+                console.log('Atualizar Pedido.')
+                const updatePed = await update.updatePed( 17, { prod_id:'1' })
+                console.log('Dados do Pedido Cliente Atualizados com sucesso');
+                break;
+
+            case 10:
+                console.log('Remover cliente do banco de dados.')
+                let delCliID = parseInt(prompt("Digite o ID do cliente: "))
+                const deleteCli = await del.deleteCli(delCliID)
+                console.log('Cliente Removido');
+                break;
+
+            case 11:
+                console.log('Remover produto do banco de dados.')
+                let delProdID = parseInt(prompt("Digite o ID do produto: "))
+                const deleteProd = await del.deleteProd(delProdID)
+                console.log('Produto Deletado');
+                break;
+
+            case 12:
+                console.log('Remover pedido do banco de dados.')
+                let delPedID = parseInt(prompt("Digite o ID do pedido: "))
+                const deletePed = await del.deletePed(delPedID)
+                console.log('Pedido Deletado');
+                break;
+
+            default:
+                console.log(`Operação não entendida.`)
+        }
 
 })()
