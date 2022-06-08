@@ -1,0 +1,20 @@
+{
+  "name": "exercicio-4-desenvolvimento-web",
+  "version": "1.0.0",
+  "description": "quarto exercicio realizado para a aula de desenvolvimento web",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mysql2": "^2.3.3",
+    "nodemon": "^2.0.16",
+    "prompt-sync": "^4.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
