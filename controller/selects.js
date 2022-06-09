@@ -19,7 +19,7 @@ async function selecionarPedidos(){
     const conn = await db.mysqlConnection();
     const [rows] = await conn.query(`
     select
-        c.nome, c.cpf , prod.nome_prod, prod.valor_prod
+        ped.id, c.nome, c.cpf , prod.nome_prod, prod.valor_prod
     from
         produtos prod, clientes c, pedidos ped 
     where
