@@ -1,4 +1,5 @@
 async function mysqlConnection(){
+    require('dotenv').config()
     if(global.connection && global.connection.state !== 'disconnected')
         return global.connection;
 
@@ -7,8 +8,8 @@ async function mysqlConnection(){
         {
             host: 'localhost',
             user: 'root',
-            database: 'ex4',
-            password: 'cadmax123'
+            database: process.env.BD,
+            password: process.env.BD_SENHA
         }
     );
     console.log("Conectou no MySQL!");

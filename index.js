@@ -37,6 +37,9 @@
         if(produtos.length)console.log(`11 - Remover produto.`);
         if(clientes.length && produtos.length && pedidos.length)console.log(`12 - Remover pedido.`);
 
+        // CONSOLE DE SAIDA
+        console.log(`0 - Sair`)
+
         let option = parseInt(prompt(`Por favor, escolha uma das opções acima: `));
 
             switch(option){
